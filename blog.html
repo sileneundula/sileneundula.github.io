@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>SileneUndula</title>
+        <title>silene | Blog</title>
         <link rel="stylesheet" href="Static/bulma/bulma.min.css" />
-        <link rel="stylesheet" href="Static/Md/github-markdown.css">
+        <link rel="stylesheet" href="Static/md/github-markdown.css">
         <style>
 	.markdown-body {
 		box-sizing: border-box;
@@ -19,22 +19,26 @@
 		}
 	}
 </style>
-    </head>
+<script src="static/js/nav.js"></script>
+</head>
     
-    <body>
-        
-        
-        <nav class="navbar is-transparent">
-    <div class="navbar-burger js-burger" data-target="navbarExampleTransparentExample">
-      <span></span>
-      <span></span>
-      <span></span>
-      <span></span>
+<body>
+  
+<nav class="navbar is-dark" role="navigation">
+    <div class="navbar-brand">
+        <a href="index.html" class="navbar-item">
+            silene
+          </a>
+    <div onclick="navbar_dropdown()" id="burger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="silenenavbar">
+<span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    <span aria-hidden="true"></span>
+</div>
     </div>
 
-  <div id="navbarExampleTransparentExample" class="navbar-menu">
+  <div id="navbar" class="navbar-menu">
     <div class="navbar-start">
-      <a class="navbar-item" href="index.html"> Home </a>
         <a class="navbar-item" href="about.html"> About </a>
         <a class="navbar-item" href="blog.html"> Blog </a>
         <a class="navbar-item" href="projects.html"> Projects </a>
@@ -42,14 +46,24 @@
     </div>
   </div>
 </nav>
+
         
-        <!--SECTION HERO-->
-<div class="container">
-    <article class="markdown-body">
-	<h1>Blog Posts</h1>
-</article>
-        </div>
-    
+
+<div class="card">
+  <div class="card-content">
+    <p class="title">
+        Introductory Post To RSA (Asymetric Encryption)
+    </p>
+    <p class="subtitle">silene | Jan 9 2024</p>
+  </div>
+    <footer class="card-footer">
+    <p class="card-footer-item">
+      <span>
+          <a href="">View Post</a>
+      </span>
+    </p>
+    </footer>
+</div>
     </body>
 
 </html>

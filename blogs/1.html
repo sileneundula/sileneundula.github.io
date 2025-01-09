@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Silene</title>
+        <link rel="stylesheet" href="/static/bulma/bulma.min.css" />
+        <link rel="stylesheet" href="/static/md/github-markdown.css">
+        <style>
+	.markdown-body {
+		box-sizing: border-box;
+		min-width: 200px;
+		max-width: 980px;
+		margin: 0 auto;
+		padding: 45px;
+	}
+
+	@media (max-width: 767px) {
+		.markdown-body {
+			padding: 15px;
+		}
+	}
+    <script src="static/js/nav.js"></script>
+</style>
+    </head>
+    <body>
+    <nav class="navbar is-dark" role="navigation">
+    <div class="navbar-brand">
+        <a href="index.html" class="navbar-item">
+            silene
+          </a>
+    <div onclick="navbar_dropdown()" id="burger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="silenenavbar">
+<span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    <span aria-hidden="true"></span>
+</div>
+    </div>
+
+  <div id="navbar" class="navbar-menu">
+    <div class="navbar-start">
+        <a class="navbar-item" href="about.html"> About </a>
+        <a class="navbar-item" href="blog.html"> Blog </a>
+        <a class="navbar-item" href="projects.html"> Projects </a>
+        <a class="navbar-item" href="contact.html"> Contact </a>
+    </div>
+  </div>
+</nav>
+        
+        <div class="container">
+    <article class="markdown-body">
+        <h1>A Primer On RSA Public Key Cryptography</h1>
+           <h2>About</h2>
+        <p><b>RSA</b>, also known as Rivest–Shamir–Adleman, is a public key cryptography system and one of the most widely used. It is one of the first public key cryptography systems found that allowed a party to encrypt/decrypt messages using its algorithm. It is based on the hardness of factoring large primes.</p>
+        <p>The most fundamental component of RSA is that it comes with two keys, a public key, and a secret key. The public key can be shared to the rest of the world while the private key remains a secret. The private key is then used to decrypt messages encrypted to the public key.</p>
+        <h2>History</h2>
+        <p>RSA is one of the most basic and first found public key systems that allowed asymetric encryption as opposed to symmetric encryption. It was developed in 1973 at GCHQ by Ron Rivest, Adi Shamir and Leonard Adleman.</p>
+        
+        <h2>Design</h2>
+        <h3>Variables</h3>
+        <h4>Public Key And Secret Key</h4>
+        <kbd>PublicKey:</kbd> <kbd>(e,n)</kbd>
+        <br>
+        <kbd>SecretKey:</kbd> <kbd>(d)</kbd>
+        <h4>Encryption and Decryption</h4>
+        <kbd>Encryption:</kbd> <kbd>message<sup>e</sup> mod n</kbd>
+        <br>
+        <kbd>Decryption:</kbd> <kbd>ciphertext<sup>d</sup> mod n</kbd>
+        <h4>Internals</h4>
+        <kbd>p</kbd> : A Randomally Generated Large Prime Number
+        <br>
+        <kbd>q</kbd> : A Randomally Generated Large Prime Number
+        <br>
+        <kbd>n</kbd> = <kbd>p</kbd> * <kbd>q</kbd> (the modulus and public key)
+        <br>
+        <br>
+        <kbd>r</kbd> = <kbd>(p-1)(q-1)</kbd> (<b>Carmichael's totient function</b> on <kbd>n</kbd>)
+        <br>
+        <kbd>e</kbd>: A statically chosen coprime number that is released in the public key. The usual value is <kbd>65537</kbd>.
+        <br>
+        <br>
+        <kbd>d</kbd> = <kbd>e^-1 mod r</kbd> (modular multiplicative inverse)
+        
+        <h4>Others</h4>
+        <kbd>Message:</kbd> the number or message to encrypt by the public key
+        <kbd>Ciphertext:</kbd> the ciphertext to decrypt by the private key
+        
+        <h3>Walkthrough</h3>
+        <p>Lets say we would like to generate a new <b>RSA Keypair</b>.</p>
+        
+        <p>To generate a keypair, we need to generate two random primes, known as <kbd>p</kbd> and <kbd>q</kbd> to find the modulus, stored as the public key, also known as <kbd>n</kbd>.</p>
+        
+        <blockquote>These primes are generally generated in the sizes of 2048, 3072, 4096 bits to be secure. That is quite a large number and hard to factor for most computers, excluding quantum computers which may be able to break RSA.</blockquote>
+        
+        <h4>Step 1: Generate The Prime Numbers</h4>
+        
+        <p>For this purpose, we will generate small primes of <kbd>p=17</kbd> and <kbd>q=3</kbd>.</p>
+        
+        <h4>Step 2: Construct the Modulus From The Primes To Generate The Modulus <kbd>n</kbd></h4>
+        
+        <p>Equation: <kbd>n = (p * q)</kbd></p>
+        
+        <p>We will then multiply them together to get <kbd>n=51</kbd>. This <kbd>n</kbd> is kept in the public key.</p>
+        
+        <h4>Step 3: Calculate <kbd>r</kbd></h4>
+        
+        <p><b>Equation:</b> <kbd>r = (p-1)(q-1)</kbd></p>
+        
+        <p>We will then compute <kbd>r</kbd> with the following equation: <kbd>r=(p-1)(q-1)</kbd>.</p>
+        
+        <p>That would be <kbd>r = (17-1)(3-1) = (16)(2) = 32</kbd></p>
+        
+        <p>This can be done using <b>Euclids Algorithms</b>.</p>
+        
+        
+        
+        
+            
+            
+            
+            
+            
+            
+            </article>
+        </div>
+        
+        
+
+    </body>
+</html>

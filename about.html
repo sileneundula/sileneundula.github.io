@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>SileneUndula</title>
+        <title>Silene</title>
         <link rel="stylesheet" href="Static/bulma/bulma.min.css" />
         <link rel="stylesheet" href="Static/Md/github-markdown.css">
         <style>
@@ -18,23 +18,27 @@
 			padding: 15px;
 		}
 	}
+    <script src="static/js/nav.js"></script>
 </style>
     </head>
     
     <body>
         
-        
-        <nav class="navbar is-transparent">
-    <div class="navbar-burger js-burger" data-target="navbarExampleTransparentExample">
-      <span></span>
-      <span></span>
-      <span></span>
-      <span></span>
+<nav class="navbar is-dark" role="navigation">
+    <div class="navbar-brand">
+        <a href="index.html" class="navbar-item">
+            silene
+          </a>
+    <div onclick="navbar_dropdown()" id="burger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="silenenavbar">
+<span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    <span aria-hidden="true"></span>
+</div>
     </div>
 
-  <div id="navbarExampleTransparentExample" class="navbar-menu">
+  <div id="navbar" class="navbar-menu">
     <div class="navbar-start">
-      <a class="navbar-item" href="index.html"> Home </a>
         <a class="navbar-item" href="about.html"> About </a>
         <a class="navbar-item" href="blog.html"> Blog </a>
         <a class="navbar-item" href="projects.html"> Projects </a>
@@ -47,7 +51,7 @@
 <div class="container">
     <article class="markdown-body">
 	<h1>About Me</h1>
-	<p>I am a student who is studying programming, security, cryptography, web design, backend, decentralization, among other topics.</p>
+	<p>I am a student who is studying programming, security, cryptography, technical writing, web design, backend, decentralization, among other topics.</p>
         
     <p>My interests outside of my tech experience include art, 3d design, graphic design, pharmacology, and music.</p>
         
