@@ -129,19 +129,29 @@
         
         <h3>Encryption</h3>
         
-        <p>To encrypt a message, lets say <kbd>12</kbd> we take the <kbd>message</kbd> as a number and calculate the following:</p>
+        <p>To encrypt a message, lets say <kbd>8</kbd> we take the <kbd>message</kbd> as a number and calculate the following:</p>
         
         <p>Equation: <kbd> CipherText = message<sup>e</sup> mod n</kbd></p>
         
-        <p><kbd>CipherText = 12<sup>5</sup> mod 51</kbd></p>
+        <p><kbd>CipherText = 8<sup>5</sup> mod 51</kbd></p>
         
-        <p><kbd>CipherText = 248832 mod 51</kbd></p>
+        <p><kbd>CipherText = 32768 mod 51</kbd></p>
         
-        <p><kbd>CipherText = 3</kbd></p>
+        <p><kbd>CipherText = 26</kbd></p>
         
         <h3>Decryption</h3>
         
-        To decrypt a message, we take the <kbd>CipherText</kbd>
+        <p>To decrypt a message, we take the <kbd>CipherText</kbd> and use the private key, also known as <kbd>d</kbd>.</p>
+        
+        <p>Equation: <kbd>DecryptedMessage = CipherText<sup>d</sup> mod n</kbd></p>
+        <p><kbd>CipherText = 26</kbd> (as per this example)</p>
+        <p><kbd>26<sup>5</sup> mod 51</kbd></p>
+        <p><kbd>11881376 mod 51</kbd></p>
+        <p><kbd>DecryptedMessage = 8</kbd></p>
+        
+        <h2>Conclusion</h2>
+        
+        <p><b>RSA</b> is an important part of <b>Public-Key Cryptography</b> and still plays a fundamental role in security. It is often used for WebPKI, GNUpg, and SSH. It is used to encrypt traffic in TLS/SSL and widely deployed around the world. The simplicity of it makes it a valuable solution as it only remains on integer factorization problems. In today's society, RSA keys are often generated for daily purposes and serve a fundamanetal role to keeping things secure.</p>
         
         
             
