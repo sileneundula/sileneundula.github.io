@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Introducing ShulginSigning</title>
+        <link rel="stylesheet" href="/css/bulma/bulma.min.css" />
+        <link rel="stylesheet" href="/css/md/github-markdown.css">
+        <style>
+	   .markdown-body {
+		  box-sizing: border-box;
+		  min-width: 200px;
+		  max-width: 980px;
+		  margin: 0 auto;
+		  padding: 45px;
+	   }
+
+	   @media (max-width: 767px) {
+		  .markdown-body {
+			 padding: 15px;
+		  }
+	   }
+            </style>
+    <script src="/static/js/nav.js"></script>
+
+    </head>
+    <body>
+    <nav class="navbar is-dark" role="navigation">
+    <div class="navbar-brand">
+        <a href="index.html" class="navbar-item">
+            silene
+          </a>
+    <div onclick="navbar_dropdown()" id="burger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="silenenavbar">
+<span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    <span aria-hidden="true"></span>
+</div>
+    </div>
+
+  <div id="navbar" class="navbar-menu">
+    <div class="navbar-start">
+        <a class="navbar-item" href="/about.html"> About </a>
+        <a class="navbar-item" href="/blog.html"> Blog </a>
+        <a class="navbar-item" href="/projects.html"> Projects </a>
+        <a class="navbar-item" href="/contact.html"> Contact </a>
+    </div>
+  </div>
+</nav>
+
+        <div class="container">
+    <article class="markdown-body">
+        <h1>Introducing ShulginSigning: A New Hybrid Signature Algorithm Using ED25519/ED448 And SPHINCS+ (SHAKE256) with Ephermal Hedged Signatures For Long-Term Post-Quantum Security</h1>
+        <h2>Preface</h2>
+        <strong>ShulginSigning</strong> is named after Alexander Shulgin, the creator of PIHKAL and TIHKAL, in rememberance of his passing away and contributions to the field of psychedelic studies.
+        <br>
+        <br>
+        This post dives deep into a long-term secure, post-quantum security algorithm with small public key / secret key sizes based on good measures of security assumptions.
+
+
+        <h2>1. Introduction</h2>
+        <p>With the threat of quantum computers coming sooner and sooner, as well as the threat of newer attacks on cryptography, there has been gaining interest in new cryptography algorithms. This post introduces ShulginSigning, a way of signing messages using hedged signatures and cryptographically random number generation that are derived from different sources, thus, thwarting attacks on randomness and randomness backdoors. It uses advanced techniques to remain a long-term, secure, and highly useable signature algorithm for the coming future.</p>
+
+        <h2>1.1 ED25519: Classical, ECC Signing Algorithm</h2>
+        <p><b>Note:</b> Ed448 is preferred...</p>
+        <p><strong>Ed25519 (also known as EdDSA)</strong> is an elliptic-curve signature algorithm that is based on twisted edwards curve. It has shown to be effective in reducing side-channel attacks and its usage has become widely used, being standardized in RFCS alongside Ed448 (which is preferred for ShulginSigning). It does not use a CSPRNG when signing, unlike ECDSA and signing is derived using a hash function.</p>
+
+        <p>Ed25519 has small public key sizes coming at around 32 bytes with signatures being 64 bytes.</p>
+
+        <h2>1.2 SPHINCS+</h2>
+        <p>SPHINCS+ is a stateless, hash-based, post-quantum, digital signature scheme that is similar to the design of lamport signatures and related but as opposed to being one-time signatures, it is stateless.</p>
+        
+        <p>SPHINCS+ has small key sizes with the highest level of security having public key sizes at 64 bytes and secret key sizes at 128 bytes.</p>
+        <p>The signature for SPHINCS+ is around ~30,000 bytes, or 30kb.</p>
+        
+        <p>It maintains high levels of security due to the hardness of finding hash collisions and preimages of hash digests making it ideal due to the maturity of the security of hash functions.</p>
+        
+        <h2>2. ShulginSigning</h2>
+        <p>I would like to introduce <b>ShulginSigning</b>, a high-standard, post-quantum secure, hybrid digital signature algorithm for long-term high level integrity/authentication for digital signatures even in a post-quantum field.</p>
+        
+        <p>It makes every effort to be conservative towards security and makes general assumptions about the use-case that is intended.</p>
+        
+        <p>It is intended to be used for digitally signing any data in the modern world that requires long-term security with minimal security assumptions.</p>
+        
+        <h2>2.1 ShuSi: Hybrid-Keypair</h2>
+        <p>ShulginSigning uses ED25519 or ED448 with hedged signatures, thwarting attacks on cryptographic randomness, as well as SPHINCS+ with hedged signatures.</p>
+        
+        <p>This design allows it to have small public key / secret key keypairs while still maintaining its long-term security.</p>
+        
+        
+        <h2>Design</h2>
+        <h3>Variables</h3>
+        <h4>Public Key And Secret Key</h4>
+        <kbd>PublicKey:</kbd> <kbd>(e,n)</kbd>
+        <br>
+        <kbd>SecretKey:</kbd> <kbd>(d)</kbd>
+        <h4>Encryption and Decryption</h4>
+        <kbd>Encryption:</kbd> <kbd>message<sup>e</sup> mod n</kbd>
+        <br>
+        <kbd>Decryption:</kbd> <kbd>ciphertext<sup>d</sup> mod n</kbd>
+        <h4>Internals</h4>
+        <kbd>p</kbd> : A Randomally Generated Large Prime Number
+        <br>
+        <kbd>q</kbd> : A Randomally Generated Large Prime Number
+        <br>
+        <kbd>n</kbd> = <kbd>p</kbd> * <kbd>q</kbd> (the modulus and public key)
+        <br>
+        <br>
+        <kbd>r</kbd> = <kbd>(p-1)(q-1)</kbd> (<b>Carmichael's totient function</b> on <kbd>n</kbd>)
+        <br>
+        <kbd>e</kbd>: A statically chosen coprime number that is released in the public key. The usual value is <kbd>65537</kbd>.
+        <br>
+        <br>
+        <kbd>d</kbd> = <kbd>e^-1 mod r</kbd> (modular multiplicative inverse)
+
+        <h4>Others</h4>
+        <kbd>Message:</kbd> the number or message to encrypt by the public key
+        <kbd>Ciphertext:</kbd> the ciphertext to decrypt by the private key
+
+        <h3>Key Generation</h3>
+        <p>Lets say we would like to generate a new <b>RSA Keypair</b>.</p>
+
+        <p>To generate a keypair, we need to generate two random primes, known as <kbd>p</kbd> and <kbd>q</kbd> to find the modulus, stored as the public key, also known as <kbd>n</kbd>.</p>
+
+        <blockquote>These primes are generally generated in the sizes of 2048, 3072, 4096 bits to be secure. That is quite a large number and hard to factor for most computers, excluding quantum computers which may be able to break RSA.</blockquote>
+
+        <h4>Step 1: Generate The Prime Numbers</h4>
+
+        <p>For this purpose, we will generate small primes of <kbd>p=17</kbd> and <kbd>q=3</kbd>.</p>
+
+        <h4>Step 2: Construct the Modulus From The Primes To Generate The Modulus <kbd>n</kbd></h4>
+
+        <p>Equation: <kbd>n = (p * q)</kbd></p>
+
+        <p>We will then multiply them together to get <kbd>n = (17 * 3) = 51</kbd>. This <kbd>n</kbd> is kept in the public key.</p>
+
+        <h4>Step 3: Calculate <kbd>r</kbd></h4>
+
+        <p><b>Equation:</b> <kbd>r = (p-1)(q-1)</kbd></p>
+
+        <p>We will then compute <kbd>r</kbd> with the following equation: <kbd>r=(p-1)(q-1)</kbd>.</p>
+
+        <p>That would be <kbd>r = (17-1)(3-1) = (16)(2) = 32</kbd></p>
+
+        <p>This can be done using <b>Euclids Algorithms</b>. You then need to find the least common multiple of that number.</p>
+
+        <h4>Step 4: Calculate <kbd>e</kbd> as a Coprime</h4>
+
+        <p><kbd>e: {3,5,17,65537}</kbd></p>
+
+        <p><kbd>e</kbd> is released as part of the public key. For this example, we will choose the coprime <kbd>5</kbd>. Most RSA systems use <kbd>65537</kbd> or <kbd>2<sup>16</sup>-1</kbd>.</p>
+
+        <h4>Step 5: Calculate the Secret Key (<kbd>d</kbd>)</h4>
+
+        <p>Equation: <kbd>d = e<sup>-1</sup> mod r</kbd></p>
+
+        <p>We then get <kbd>d = (5 mod 32) = 5</kbd> so <kbd>d=5</kbd> or the secret key</p>
+
+        <h4>Step 6: Conclude with the Public Key and Private Key</h4>
+
+        <p><kbd>PublicKey: (e,n) = (5,51)</kbd></p>
+        <p><kbd>SecretKey: (d) = 5</kbd></p>
+
+        <h3>Encryption</h3>
+
+        <p>To encrypt a message, lets say <kbd>8</kbd> we take the <kbd>message</kbd> as a number and calculate the following:</p>
+
+        <p>Equation: <kbd> CipherText = message<sup>e</sup> mod n</kbd></p>
+
+        <p><kbd>CipherText = 8<sup>5</sup> mod 51</kbd></p>
+
+        <p><kbd>CipherText = 32768 mod 51</kbd></p>
+
+        <p><kbd>CipherText = 26</kbd></p>
+
+        <h3>Decryption</h3>
+
+        <p>To decrypt a message, we take the <kbd>CipherText</kbd> and use the private key, also known as <kbd>d</kbd>.</p>
+
+        <p>Equation: <kbd>DecryptedMessage = CipherText<sup>d</sup> mod n</kbd></p>
+        <p><kbd>CipherText = 26</kbd> (as per this example)</p>
+        <p><kbd>26<sup>5</sup> mod 51</kbd></p>
+        <p><kbd>11881376 mod 51</kbd></p>
+        <p><kbd>DecryptedMessage = 8</kbd></p>
+
+        <h2>Conclusion</h2>
+
+        <p><b>RSA</b> is an important part of <b>Public-Key Cryptography</b> and still plays a fundamental role in security. It is often used for WebPKI, GNUpg, and SSH. It is used to encrypt traffic in TLS/SSL and widely deployed around the world. The simplicity of it makes it a valuable solution as it only remains on integer factorization problems. In today's society, RSA keys are often generated for daily purposes and serve a fundamanetal role to keeping things secure.</p>
+
+            </article>
+        </div>
+    </body>
+</html>
